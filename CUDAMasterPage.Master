@@ -1,0 +1,197 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CUDAMasterPage.master.cs" Inherits="JKTS_Contract_system.CUDAMasterPage" %>
+
+<%@ Register Src ="~/ucSetting.ascx" TagPrefix="uc" TagName ="Setting" %>
+<%@ Register Src ="~/ucLogo.ascx" TagPrefix ="uc" TagName ="Logo" %>
+
+<!DOCTYPE html>
+<style>
+      #copyright {
+    width: 100%;
+    height: 25px;
+    bottom: 0;
+    left: 0;
+    display: block;
+    border-top: 1px solid #000;
+    position:fixed;/* this gives IE6 hasLayout to properly clear */
+	clear: both; /* this clear property forces the .container to understand where the columns end and contain them */
+    }
+</style>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>JKTS Contract Management System</title>
+        
+    <meta name="keywords" content=""/>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'/>
+
+    <!-- styles -->
+    <link href="css/font-awesome.css" rel="stylesheet"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/animate.min.css" rel="stylesheet"/>
+    <link href="css/owl.carousel.css" rel="stylesheet"/>
+    <link href="css/owl.theme.css" rel="stylesheet"/>
+
+    <!-- theme stylesheet -->
+    <link href="css/style.default.css" rel="stylesheet" />
+
+    <!-- your stylesheet with modifications -->
+    <link href="css/custom.css" rel="stylesheet"/>
+
+    <link rel="shortcut icon" href="favicon.png"/>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+         <div id="top">
+        <div class="container">
+            <div class="col-md-6 offer" data-animate="fadeInDown">
+                
+            </div>
+            <div class="col-md-6" data-animate="fadeInDown">
+                <ul class="menu">
+
+                             <asp:RadioButton ID="Rb_CU" runat="server" GroupName ="2" RepeatDirection="Vertical"  HorizontalAlignment="Left" FontSize="18" Padding="6,2,0,0" Margin="0,0,0,30"  ForeColor="White" Text="Company User:" TextAlign="Left" OnCheckedChanged="Rb_CU_CheckedChanged" AutoPostBack="True" />
+                             <asp:RadioButton ID="Rb_DA" runat="server" GroupName ="2" RepeatDirection="Vertical"  HorizontalAlignment="Left" FontSize="18" Padding="6,2,0,0" Margin="0,0,0,30"   ForeColor="White" Text="Department Admin:" Checked="True" TextAlign="Left" OnCheckedChanged="Rb_DA_CheckedChanged1" AutoPostBack="True"/>
+                            <li></li>
+
+                            <li>&nbsp;&nbsp;&nbsp; </li>
+
+                               <asp:LinkButton ID="lb_Logout" runat="server" CausesValidation="False" OnClick="lb_Logout_Click">Logout</asp:LinkButton>     
+                               <li></li>
+                               <li></li>
+                               <asp:LinkButton ID="lb_ChangePassword" runat="server" CausesValidation="False" OnClick="lb_ChangePassword_Click" >Change Password</asp:LinkButton>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- *** TOP BAR END *** -->
+
+    <!-- *** NAVBAR ***
+ _________________________________________________________ -->
+
+         <div class="navbar navbar-default yamm" >
+        <div class="container">
+            <div class="navbar-header">
+
+                <a class="navbar-brand home" href="CUDAHomePage.aspx" data-animate-hover="bounce">
+
+                           <uc:Logo ID ="LogoControl" runat ="server" />
+                </a>
+            </div>
+            <!--/.navbar-header -->
+
+            <div class="navbar-collapse collapse" id="navigation">
+
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="active"><a href="CUDAHomePage.aspx">Home</a>
+                    </li>
+                    <li class="dropdown yamm-fw">
+                        <a href="CUDAViewAllContracts.aspx" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">Contract Management <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="yamm-content">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h5>Contract </h5>
+                                            <ul>
+                                                <li><a href="CUDAViewAllContracts.aspx">View/Create Contract Listing</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.yamm-content -->
+                            </li>
+                        </ul>
+                    </li>
+
+                      <li class="dropdown yamm-fw">
+                        <a href="CUDAViewUser.aspx" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">User Management<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="yamm-content">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <h5>User Management </h5>
+                                            <ul>
+                                                <li><a href="CUDAViewUser.aspx">View Users</a>
+                                                </li>
+                                                <li><a href="CUDACreateAccount.aspx">Create Users</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                       
+                                        <div class="col-sm-3">
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.yamm-content -->
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!--/.nav-collapse -->
+                <!--/.nav-collapse -->
+
+            </div>
+
+         
+                </div>
+
+            </div>
+            <!--/.nav-collapse -->
+
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /#navbar -->
+
+    <!-- *** NAVBAR END *** -->
+        <div id ="content" style="width: 1000px; margin:auto; padding-bottom: 100px;">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server"  > 
+        
+        </asp:ContentPlaceHolder>
+        </div>
+        <!-- *** COPYRIGHT ***
+ _________________________________________________________ -->
+
+            <div id="copyright">
+            <div class="container">
+                <div class="col-md-6">
+        <uc:Setting ID="Setting1" runat ="server" />
+
+               </div>
+            </div>
+        </div>
+
+  
+        <!-- *** COPYRIGHT END *** -->
+
+
+
+    
+    <!-- /#all -->
+
+
+    
+
+    <!-- *** SCRIPTS TO INCLUDE ***
+ _________________________________________________________ -->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/bootstrap-hover-dropdown.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/front.js"></script>
+
+    </div>
+    </form>
+</body>
+</html>
