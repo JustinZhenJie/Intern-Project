@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using JKTS_Contract_system.DAL;
+
+namespace JKTS_Contract_system.BLL
+{
+    public class BllDept
+    {
+        DalDept datalayerDept = new DalDept();
+
+        public DataSet GetDept()
+        { 
+            datalayerDept = new DalDept();
+            return datalayerDept.GetDept();
+        }
+        public DataSet GetAllByDept(string dept)
+        {
+
+            datalayerDept = new DalDept();
+            return datalayerDept.GetAllByDept(dept);
+        }
+        public Boolean VerifyDept(string dept)
+        {
+            int result;
+            Boolean verify;
+            DataSet ds;
+            DataTable dt;
+
+            result = 0;
+            verify = false;
+
+            ds = GetAllByDept(dept);
+            dt = ds.Tables[0];
+
+            foreach (DataRow row in dt.Rows)
+            {
+                string Name = row["User_Name"].ToString();
+
+
+                if (name.Equals(Name))
+                {
+                    result = 1;
+                }
+                else
+                {
+                    result = 0;
+                }
+            }
+
+            if (result == 1)
+            {
+                verify = true;
+            }
+            else if (result == 0)
+            {
+                verify = false;
+            }
+
+            return verify;
+        }
+        public int UpdateDeptDetails(string DeptID, string User_Dept, string Dept_Head, string Dept_GM)
+        {
+            datalayerDept = new DalDept();
+            return datalayerDept.UpdateDeptDetails(DeptID, User_Dept, Dept_Head, Dept_GM);
+        }
+
+
+        public int InsertDept(string User_Dept, string Dept_Head, string Dept_GM)
+        {
+
+            datalayerDept = new DalDept();
+            return datalayerDept.InsertDept(User_Dept, Dept_Head, Dept_GM);
+        }
+
+        public int DeleteDept(string DeptID)
+        {
+            datalayerDept = new DalDept();
+            return datalayerDept.DeleteDept(DeptID);
+        }
+    }
+}

@@ -1,0 +1,10 @@
+/** Your theme modifications here **/
+.GridView {
+    width: 1100px;
+    text-align:center;
+    
+}
+.DetailsView {
+    width: 500px;
+    text-align: center;
+}

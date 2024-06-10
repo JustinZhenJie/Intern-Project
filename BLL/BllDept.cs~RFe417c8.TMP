@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using JKTS_Contract_system.DAL;
+
+namespace JKTS_Contract_system.BLL
+{
+    public class BllDept
+    {
+        DalDept datalayerDept = new DalDept();
+
+        public DataSet GetDept()
+        { 
+            datalayerDept = new DalDept();
+            return datalayerDept.GetDept();
+        }
+
+        public int UpdateDeptDetails(string DeptID, string User_Dept, string Dept_Head, string Dept_GM)
+        {
+            datalayerDept = new DalDept();
+            return datalayerDept.UpdateDeptDetails(DeptID, User_Dept, Dept_Head, Dept_GM);
+        }
+
+
+        public int InsertDept(string username, string password, string email, string department, string designation, string type, string active)
+        {
+
+            DalAccount datalayerAccount;
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.InsertAcc(username, encryptPassword, email, department, designation, type, active, encryptID);
+        }
+
+        public int DeleteDept(string id)
+        {
+            DalAccount datalayerAccount;
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.DeleteUser(id);
+        }
+    }
+}

@@ -1,0 +1,130 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+using JKTS_Contract_system.DAL;
+
+namespace JKTS_Contract_system.BLL
+{
+    public class BllAccount
+    {
+
+       public DataSet GetAccount(string username, string password)
+        {
+            DalAccount dataLayerAccount;
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetAccount(username, password);
+        }
+        public Boolean VerifyAccount(string username, string password)
+        {
+            int result;
+            Boolean verify;
+            DataSet ds;
+            DataTable dt;
+
+            result = 0;
+            verify = false;
+
+            ds = GetAccount(username, password);
+            dt = ds.Tables[0];
+
+            foreach (DataRow row in dt.Rows)
+            {
+                string user = row["username"].ToString();
+                string pass = row["password"].ToString();
+
+                if (username.Equals(user) && password.Equals(pass))
+                {
+                    result = 1;
+                }
+                else
+                {
+                    result = 0;
+                }
+            }
+
+            if (result == 1)
+            {
+                verify = true;
+            }
+            else if (result == 0)
+            {
+                verify = false;
+            }
+
+            return verify;
+        }
+        public DataSet GetUser()
+        {
+            DalAccount dataLayerAccount;
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetUser();
+        }
+        
+        public DataSet GetUserBySearch(string searchquery)
+        {
+            DalAccount dataLayerAccount;
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetUserBySearch(searchquery);
+        }
+        public DataSet GetUserByDept(string searchquery)
+        {
+            DalAccount dataLayerAccount;
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetUserByDept(searchquery);
+        }
+        public DataSet GetUserByActive(string searchquery)
+        {
+            DalAccount dataLayerAccount;
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetUserByActive(searchquery);
+        }
+
+        public DataSet GetUserDetails(string id)
+        {
+            DalAccount dataLayerAccount;
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetUserDetails(id);
+        }
+        public DataSet GetDept()
+        {
+            DalAccount dataLayerAccount;
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetDept();
+        }
+
+        public DataSet GetStatus()
+        {
+            DalAccount dataLayerAccount;
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetStatus();
+        }
+
+        public int UpdateUserDetails(string id, string username,string email, string department, string designation, string type, string active)
+        {
+            DalAccount datalayerAccount;
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.UpdateUserDetails(id, username, email, department, designation, type, active);
+        }
+        public int InsertAcc(string username, string password, string email, string department, string designation, string type, string active)
+        {
+            DalAccount datalayerAccount;
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.InsertAcc(username, password, email, department, designation, type, active);
+        }
+        public int InsertAccDetails(string username, string password, string email, string department, string designation, string type, string active, string creation, string createdby)
+        {
+            DalAccount datalayerAccount;
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.InsertAccDetails(username, password, email, department, designation, type, active, creation, createdby);
+        }
+
+        public int DeleteUser(string id)
+        {
+            DalAccount datalayerAccount;
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.DeleteUser(id);
+        }
+    }
+}

@@ -1,0 +1,207 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+using JKTS_Contract_system.DAL;
+using JKTS_Contract_system.AppCode;
+
+namespace JKTS_Contract_system.BLL
+{
+    public class BllAccount
+    {
+        DalAccount dataLayerAccount = new DalAccount();
+        PassEncryp pCrypt = new PassEncryp();
+        public DataSet GetAccount(string password, string email)
+        {
+            string encryptID = "";
+            DataSet ds = GetEmail(email);
+            DataTable dt = ds.Tables[0];
+            
+            foreach (DataRow row in dt.Rows)
+            {
+                encryptID = row["EncryptID"].ToString();
+            }
+
+            string encryptPassword = pCrypt.Encrypt(encryptID, password);
+            return dataLayerAccount.GetAccount(encryptPassword, email);
+        }
+
+        public DataSet GetEmail(string email)
+        {
+        
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetEmail(email);
+        }
+        public Boolean VerifyAccount(string password, string email)
+        {
+            int result;
+            Boolean verify;
+            DataSet ds;
+            DataTable dt;
+           
+
+            result = 0;
+            verify = false;
+
+            ds = GetAccount(password, email);
+            dt = ds.Tables[0];
+
+            foreach (DataRow row in dt.Rows)
+            {
+                string pass = row["User_Password"].ToString();
+                string mail = row["User_Email"].ToString();
+                string encryptID = row["encryptID"].ToString();
+
+                string encryptPassword = pCrypt.Encrypt(encryptID, password);
+
+
+                if (encryptPassword.Equals(pass) && email.Equals(mail))
+                {
+                    result = 1;
+                }
+                else
+                {
+                    result = 0;
+                }
+            }
+
+            if (result == 1)
+            {
+                verify = true;
+            }
+            else if (result == 0)
+            {
+                verify = false;
+            }
+
+            return verify;
+        }
+        public Boolean VerifyEmail(string email)
+        {
+            int result;
+            Boolean verify;
+            DataSet ds;
+            DataTable dt;
+
+            result = 0;
+            verify = false;
+
+            ds = GetEmail(email);
+            dt = ds.Tables[0];
+
+            foreach (DataRow row in dt.Rows)
+            {
+                string mail = row["User_Email"].ToString();
+
+
+                if (email.Equals(mail))
+                {
+                    result = 1;
+                }
+                else
+                {
+                    result = 0;
+                }
+            }
+
+            if (result == 1)
+            {
+                verify = true;
+            }
+            else if (result == 0)
+            {
+                verify = false;
+            }
+
+            return verify;
+        }
+        public DataSet GetUser()
+        {
+        
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetUser();
+        }
+        
+        public DataSet GetUserBySearch(string searchquery)
+        {
+     
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetUserBySearch(searchquery);
+        }
+        public DataSet GetUserByDept(string searchquery)
+        {
+         
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetUserByDept(searchquery);
+        }
+        public DataSet GetUserByActive(string searchquery)
+        {
+       
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetUserByActive(searchquery);
+        }
+
+        public DataSet GetUserDetails(string id)
+        {
+     
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetUserDetails(id);
+        }
+        public DataSet GetDept()
+        {
+
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetDept();
+        }
+
+        public DataSet GetStatus()
+        {
+            DalAccount dataLayerAccount;
+            dataLayerAccount = new DalAccount();
+            return dataLayerAccount.GetStatus();
+        }
+
+        public int UpdateUserDetails(string id, string username,string email, string department, string designation, string type, string active)
+        {
+            DalAccount datalayerAccount;
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.UpdateUserDetails(id, username, email, department, designation, type, active);
+        }
+
+        public int UpdatePassword(string password, string email)
+        {
+            
+            DalAccount datalayerAccount;
+            string encryptID, encryptPassword;
+            encryptID = EncryptionData.GenerateIdentifier(12);
+            encryptPassword = pCrypt.Encrypt(encryptID, password);
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.UpdatePassword(encryptPassword, email, encryptID);
+        }
+        public int InsertAcc(string username, string password, string email, string department, string designation, string type, string active)
+        {
+    
+            DalAccount datalayerAccount;
+            string encryptID, encryptPassword;
+            encryptID = EncryptionData.GenerateIdentifier(12);
+            encryptPassword = pCrypt.Encrypt(encryptID, password);
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.InsertAcc(username, encryptPassword, email, department, designation, type, active, encryptID);
+        }
+
+        public int InsertAccDetails(string username, string password, string email, string department, string designation, string type, string active, string creation, string createdby)
+        {
+            DalAccount datalayerAccount;
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.InsertAccDetails(username, password, email, department, designation, type, active, creation, createdby);
+        }
+
+        public int DeleteUser(string id)
+        {
+            DalAccount datalayerAccount;
+            datalayerAccount = new DalAccount();
+            return datalayerAccount.DeleteUser(id);
+        }
+    }
+}

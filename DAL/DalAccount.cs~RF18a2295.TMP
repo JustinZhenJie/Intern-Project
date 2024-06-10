@@ -1,0 +1,188 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Web;
+
+namespace JKTS_Contract_system.DAL
+{
+    public class DalAccount
+    {
+        private String errMsg;
+        DalConn dbConn = new DalConn();
+
+        public DataSet GetAccount(string username, string password)
+        {
+            StringBuilder sql;
+            SqlDataAdapter da;
+            DataSet accountData;
+
+            SqlConnection conn = dbConn.GetConnection();
+            accountData = new DataSet();
+            sql = new StringBuilder();
+            sql.AppendLine("SELECT *");
+            sql.AppendLine(" ");
+            sql.AppendLine("FROM User");
+            sql.AppendLine(" ");
+            sql.AppendLine("WHERE User_Name = @User_Name AND User_Password = @User_Password");
+            conn.Open();
+
+            try
+            {
+                da = new SqlDataAdapter(sql.ToString(), conn);
+                da.SelectCommand.Parameters.AddWithValue("User_Name", username);
+                da.SelectCommand.Parameters.AddWithValue("User_Password", password);
+                da.Fill(accountData);
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return accountData;
+        }
+        public DataSet GetUser()
+        {
+            StringBuilder sql;
+            SqlDataAdapter dal;
+            DataSet userData;
+
+            SqlConnection conn = dbConn.GetConnection();
+            userData = new DataSet();
+            sql = new StringBuilder();
+            sql.AppendLine("SELECT User_ID, User_Name, User_Dept, User_Type, User_Active");
+            sql.AppendLine("FROM User");
+
+            try
+            {
+                dal = new SqlDataAdapter(sql.ToString(), conn);
+                dal.Fill(userData);
+
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return userData;
+        }
+        public DataSet GetPassword(string id)
+        {
+            StringBuilder sql;
+            SqlDataAdapter dal;
+            DataSet userData;
+
+            SqlConnection conn = dbConn.GetConnection();
+            userData = new DataSet();
+            sql = new StringBuilder();
+            sql.AppendLine("SELECT User_Password");
+            sql.AppendLine("FROM User");
+
+
+            conn.Open();
+            try
+            {
+                dal = new SqlDataAdapter(sql.ToString(), conn);
+                dal.SelectCommand.Parameters.AddWithValue("@User_ID", id);
+                dal.Fill(userData);
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return userData;
+
+        }
+        public int InsertAcc(string username, string email,string designation, string active)
+        {
+            StringBuilder sql;
+            SqlCommand sqlCmd;
+            int result = 0;
+
+            sql = new StringBuilder();
+
+            sql.AppendLine("INSERT INTO User (User_Name, User_Email, User_Designation, User_Active)");
+            sql.AppendLine("VALUES (@User_Name, @User_Email, @User_Designation, @User_Active)");
+            sql.AppendLine(" ");
+
+            SqlConnection conn = dbConn.GetConnection();
+            conn.Open();
+            try
+            {
+                sqlCmd = new SqlCommand(sql.ToString(), conn);
+                sqlCmd.Parameters.AddWithValue("@User_Name", username);
+                sqlCmd.Parameters.AddWithValue("@User_Email", email);
+                sqlCmd.Parameters.AddWithValue("@User_Designation", designation);
+                sqlCmd.Parameters.AddWithValue("@User_Active", active);
+    
+
+                result = sqlCmd.ExecuteNonQuery();
+                conn.Close();
+            }
+
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+        public int InsertAccDetails(string username, string password, string email, string department, string designation, string type, string active, string creation, string createdby)
+        {
+            StringBuilder sql;
+            SqlCommand sqlCmd;
+            int result = 0;
+
+            sql = new StringBuilder();
+
+            sql.AppendLine("INSERT INTO User (User_Name, User_Password, User_Email, User_Dept, User_Designation, User_Type, User_Active, User_Creation, User_CreatedBy)");
+            sql.AppendLine("VALUES (@User_Name, @User_Password, @User_Email, @User_Dept, @User_Designation, @User_Type, @User_Active, @User_Creation, @User_CreatedBy)");
+            sql.AppendLine(" ");
+
+            SqlConnection conn = dbConn.GetConnection();
+            conn.Open();
+            try
+            {
+                sqlCmd = new SqlCommand(sql.ToString(), conn);
+                sqlCmd.Parameters.AddWithValue("@User_Name", username);
+                sqlCmd.Parameters.AddWithValue("@User_Password", password);
+                sqlCmd.Parameters.AddWithValue("@User_Email", email);
+                sqlCmd.Parameters.AddWithValue("@User_Dept", department);
+                sqlCmd.Parameters.AddWithValue("@User_Designation", designation);
+                sqlCmd.Parameters.AddWithValue("@User_Type", type);
+                sqlCmd.Parameters.AddWithValue("@User_Active", active);
+                sqlCmd.Parameters.AddWithValue("@User_Creation", creation);
+                sqlCmd.Parameters.AddWithValue("@User_CreatedBy", createdby);
+
+                result = sqlCmd.ExecuteNonQuery();
+                conn.Close();
+            }
+
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+    }
+}

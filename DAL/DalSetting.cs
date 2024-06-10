@@ -1,0 +1,153 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Text;
+using System.Data;
+using System.Configuration;
+using System.Data.SqlClient;
+
+namespace JKTS_Contract_system.DAL
+{
+    public class DalSetting
+    {
+        private String errMsg;
+        DalConn dbConn = new DalConn();
+
+        //get everything from the database table (Setting)
+        public DataSet GetSetting()
+        {
+            StringBuilder sql;
+            SqlDataAdapter da;
+            DataSet setData;
+
+            SqlConnection conn = dbConn.GetConnection();
+            setData = new DataSet();
+            sql = new StringBuilder();
+            sql.AppendLine("SELECT *");
+            sql.AppendLine(" ");
+            sql.AppendLine("FROM Setting");
+            sql.AppendLine(" ");
+            conn.Open();
+
+            try
+            {
+                da = new SqlDataAdapter(sql.ToString(), conn);
+                da.Fill(setData);
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return setData;
+        }
+        //get the Logo(url of the Picture) from database table (Setting)
+        public DataSet GetLogo()
+        {
+            StringBuilder sql;
+            SqlDataAdapter da;
+            DataSet setData;
+
+            SqlConnection conn = dbConn.GetConnection();
+            setData = new DataSet();
+            sql = new StringBuilder();
+            sql.AppendLine("SELECT Logo");
+            sql.AppendLine(" ");
+            sql.AppendLine("FROM Setting");
+            sql.AppendLine(" ");
+            conn.Open();
+
+            try
+            {
+                da = new SqlDataAdapter(sql.ToString(), conn);
+                da.Fill(setData);
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return setData;
+        }
+
+
+        //to get the Email of the System Administrator from database table (Setting)
+        public DataSet GetSystemAdmin()
+        {
+            StringBuilder sql;
+            SqlDataAdapter da;
+            DataSet setData;
+
+            SqlConnection conn = dbConn.GetConnection();
+            setData = new DataSet();
+            sql = new StringBuilder();
+            sql.AppendLine("SELECT SystemAdmin");
+            sql.AppendLine(" ");
+            sql.AppendLine("FROM Setting");
+            sql.AppendLine(" ");
+            conn.Open();
+
+            try
+            {
+                da = new SqlDataAdapter(sql.ToString(), conn);
+                da.Fill(setData);
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return setData;
+        }
+        
+            //to update logo/copyright in database table (Setting)
+        public int UpdateSettingDetails(string id, string logo, string copyright)
+        {
+            StringBuilder sql;
+            SqlCommand sqlCmd;
+            int result;
+
+            result = 0;
+
+            sql = new StringBuilder();
+            sql.AppendLine("UPDATE Setting");
+            sql.AppendLine("SET Logo=@Logo, Copyright=@Copyright");
+            sql.AppendLine("WHERE SettingID = @SettingID");
+            SqlConnection conn = dbConn.GetConnection();
+            try
+            {
+                sqlCmd = new SqlCommand(sql.ToString(), conn);
+                sqlCmd.Parameters.AddWithValue("@SettingID", id);
+                sqlCmd.Parameters.AddWithValue("@Logo", logo);
+                sqlCmd.Parameters.AddWithValue("@Copyright", copyright);
+
+                conn.Open();
+                result = sqlCmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                errMsg = ex.Message;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return result;
+        }
+
+    }
+}
