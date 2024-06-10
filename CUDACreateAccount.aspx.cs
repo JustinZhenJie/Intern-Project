@@ -122,7 +122,7 @@ namespace JKTS_Contract_system
                             {
                                 MailMessage mail = new MailMessage();
                                 mail.To.Add(email);
-                                mail.From = new MailAddress("webmaster@jkts.jvckenwood.com");
+                                mail.From = new MailAddress("123@jvckenwood.com");
                                 mail.Subject = "Contract Management System Account Password";
                                 mail.Body =
                                                 "<p>Hi " + username + ", </p> " +
@@ -139,10 +139,10 @@ namespace JKTS_Contract_system
 
                                 mail.IsBodyHtml = true;
                                 SmtpClient smtp = new SmtpClient();
-                                smtp.Host = "jktsexsv01"; //Your SMTP Server Address
+                                smtp.Host = "123"; //Your SMTP Server Address
                                 smtp.UseDefaultCredentials = false;
                                 smtp.Credentials = new System.Net.NetworkCredential
-                                     ("webmaster@jkts.jvckenwood.com", "webm@ster"); // ***use valid credentials***
+                                     ("123@jvckenwood.com", "123"); // ***use valid credentials***
                                 smtp.Port = 25;// Your port number // Usually 587 or 25
 
                                 smtp.EnableSsl = false;
